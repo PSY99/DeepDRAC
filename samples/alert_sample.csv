@@ -1,0 +1,6 @@
+id,real_time,sip_str,dip_str,sport,dport,protocol,category_standard,category_standard_id,signature_priority,Label
+0,2017-07-03 08:56:37,192.168.10.3,192.168.10.9,53,62882,UDP,Potential Corporate Privacy Violation,1:15935:7,1,BENIGN
+1,2017-07-03 08:56:37,192.168.10.3,192.168.10.9,53,63276,UDP,Potential Corporate Privacy Violation,1:15935:7,1,BENIGN
+2,2017-07-03 08:56:37,192.168.10.3,192.168.10.9,53,62882,UDP,Potential Corporate Privacy Violation,1:15935:7,1,BENIGN
+3,2017-07-03 08:56:37,192.168.10.3,192.168.10.9,53,56368,UDP,Potential Corporate Privacy Violation,1:15935:7,1,BENIGN
+4,2017-07-03 08:56:37,192.168.10.3,192.168.10.9,53,63276,UDP,Potential Corporate Privacy Violation,1:15935:7,1,BENIGN

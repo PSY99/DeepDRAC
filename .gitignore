@@ -1,0 +1,64 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Model checkpoints and weights
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+
+# Experiment tracking logs
+wandb/
+swanlab/
+
+# Generated graph data (large CSV files — keep .py utility files only)
+data/graph_data/*.csv
+data/graph_data/correct/
+data/graph_data/fine-tune*/
+data/graph_data/noise*/
+data/graph_data/graph_embedding*/
+data/graph_data/pre-train/
+
+# Alert log CSVs (large — user-provided input data)
+data/alert_logs/*.csv
+data/alert_logs/correct_data/*.csv
+
+# Frequent mining outputs (regenerable — run data/frequent_mining/*.py)
+data/frequent_mining/*.txt
+
+# Environment and secrets
+.env
+.env.local
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Jupyter outputs (keep notebooks clean)
+*.ipynb_checkpoints
+
+# Log files
+*.log
