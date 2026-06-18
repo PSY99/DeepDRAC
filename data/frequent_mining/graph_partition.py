@@ -159,5 +159,5 @@ if __name__=="__main__":
     data = log2graph.format_data2csv() 
     end_time = time.time()
     elapsed_time = end_time - start_time
-    print(f"Community partition time on CIC-IDS2017，{csv_name}上的runtime: {elapsed_time} sec")
+    print(f"Community partition time for {csv_name}: {elapsed_time} sec")
 

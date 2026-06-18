@@ -4,6 +4,8 @@ Loads graph data, runs inference through the GNN encoder, and saves
 per-graph embedding vectors to CSV for downstream clustering/evaluation.
 """
 
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import os
 
 import pandas as pd

@@ -4,6 +4,8 @@ Fine-tunes a randomly initialized GNN + MLP classifier on labeled alert
 subgraphs. Used as an ablation baseline to measure the benefit of pre-training.
 """
 
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import os
 import random
 
@@ -27,6 +29,12 @@ torch.manual_seed(1)
 embedding_dim = 32
 epochs = 100
 num_classes = 14
+
+# ── Class weights ───────────────────────────────────────────────────────────
+# Computed by data_process/compute_class_weights.py
+# Formula: weight[i] = total_samples / count_per_class[i]
+# These values are from the paper's CIC-IDS2017 experiments.
+# Run compute_class_weights.py on YOUR graph data to get correct weights.
 weights = torch.tensor([
     1.01, 372.33, 992.89, 992.89, 1276.57, 1489.33, 1489.33,
     1787.2, 1787.2, 1787.2, 2234.0, 2978.67, 4468.0, 4468.0

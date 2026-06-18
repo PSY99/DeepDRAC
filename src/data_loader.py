@@ -6,6 +6,10 @@ Supports optional positional encoding (RandomWalkPE) and fine-tune mode
 (which includes per-graph labels).
 """
 
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 import json
 
 import pandas as pd
@@ -15,7 +19,7 @@ from torch_geometric.data import Data
 from torch_geometric.utils import add_self_loops, remove_self_loops
 
 import torch_geometric.transforms as T
-from config import DEVICE
+from config import DEVICE, GRAPH_DATA_DIR
 
 # Positional encoding transformer
 transform = T.AddRandomWalkPE(walk_length=2, attr_name='pe')

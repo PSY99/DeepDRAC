@@ -2,7 +2,7 @@
 DeepDRAC — Centralized path and device configuration.
 
 All paths are defined relative to the project root directory.
-Set the environment variable `DEEPDRA C_ROOT` to override the project root,
+Set the environment variable `DEEPDRAC_ROOT` to override the project root,
 otherwise it is auto-detected from this file's location.
 """
 

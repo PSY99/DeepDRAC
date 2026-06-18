@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 """DeepDRAC fine-tuning script.
 
 Fine-tunes a pre-trained GraphGPS+GINEConv model with an MLP classifier
@@ -29,6 +31,15 @@ torch.manual_seed(1)
 embedding_dim = 32
 epochs = 100
 num_classes = 14
+
+# ── Class weights (cost-sensitive learning) ─────────────────────────────────
+# HOW THESE WEIGHTS ARE COMPUTED:
+#   Run: python data_process/compute_class_weights.py
+#   That script reads the full graph CSV, counts labels per class, and applies:
+#       weight[i] = total_samples / count_per_class[i]
+#   The numbers below are from the paper's CIC-IDS2017 experiments (8936 graphs).
+#   For YOUR dataset, run compute_class_weights.py and replace this list.
+#   Also update num_classes above to match your number of attack types.
 weights = torch.tensor([
     1.01, 372.33, 992.89, 992.89, 1276.57, 1489.33, 1489.33,
     1787.2, 1787.2, 1787.2, 2234.0, 2978.67, 4468.0, 4468.0

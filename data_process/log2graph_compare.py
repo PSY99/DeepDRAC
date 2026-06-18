@@ -574,10 +574,10 @@ def second_level_community_detection(g, first_partition, algorithm='louvain'):
     """
     进行第二次社区划分
 
-    :param g: 原始图对象
-    :param first_partition: 第一次社区划分的结果
-    :param algorithm: 选择的算法，可选值为 'louvain'、'label_propagation'、'gn'
-    :return: 最终的社区划分结果，字典形式，键为节点名称，值为社区编号
+
+
+
+
     """
     final_partition = []
     community_counter = 0
@@ -593,7 +593,7 @@ def second_level_community_detection(g, first_partition, algorithm='louvain'):
                 dendrogram = subgraph.community_edge_betweenness(directed=False)
                 second_partition = dendrogram.as_clustering()
             else:
-                raise ValueError("不支持的算法，请选择 'louvain'、'label_propagation' 或 'gn'。")
+                raise ValueError("Unsupported algorithm. Choose 'louvain', 'label_propagation', or 'gn'.")
 
             for sub_node_index, sub_community in enumerate(second_partition.membership):
                 original_node_index = community_nodes[sub_node_index]
@@ -628,7 +628,7 @@ if __name__=="__main__":
             data = log2graph.format_data2csv() 
             end_time = time.time()
             elapsed_time = (end_time - start_time) / 60
-            print(f"{partition_method}社区划分（含读入读出数据），方法在CIC-IDS2017，{csv_name}上的运行时间: {elapsed_time} 分钟")
+            print(f"{partition_method}Graph partition + I/O time on {csv_name}: {elapsed_time:.2f} min: {elapsed_time} 分钟")
             with open('partition_time.log', 'a') as file:
                 file.write(f"{partition_method}社区划分（含读入读出数据），方法在CIC-IDS2017，{csv_name}上的运行时间: {elapsed_time} 分钟\n")
             

@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 """DeepDRAC fine-tuning with noisy labels.
 
 Evaluates DeepDRAC's robustness under label noise by fine-tuning on
@@ -32,7 +34,12 @@ num_classes = 14
 
 WANDB_API_KEY = os.environ.get("WANDB_API_KEY")
 
-# Per-noise-ratio class weights (5th noise training run)
+# ── Per-noise-ratio class weights ───────────────────────────────────────────
+# Computed by data_process/generate_noise_train_data.py
+# For each noise rate, that script loads graph data, applies label noise,
+# samples 10% per class, then runs: weight[i] = total_samples / count_per_class[i]
+# These values are from the paper's CIC-IDS2017 experiment (ver=5).
+# Run generate_noise_train_data.py on YOUR data to get correct weights.
 NOISE_RATE_WEIGHTS = {
     0.01: [1.02, 297.0, 891.0, 891.0, 891.0, 891.0, 891.0, 891.0, 891.0, 891.0, 891.0, 891.0, 891.0, 891.0],
     0.05: [1.05, 177.2, 221.5, 295.33, 221.5, 221.5, 295.33, 295.33, 295.33, 221.5, 295.33, 295.33, 221.5, 295.33],
@@ -140,7 +147,7 @@ if __name__ == '__main__':
     batch_size = 32; lr = 0.00001; epochs_val = 100
     validate_ratio = 0.1; test_ratio = 0.1
     node_out_feature = 30; graph_out_feature = 2
-    ver = 5
+    ver = 1
 
     GNN_model_pre_path = str(PRE_TRAIN_MODEL_DIR / "gps_global_model.pt")
 

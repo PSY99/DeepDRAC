@@ -118,6 +118,8 @@ def base_pattern_parse(base_pattern,encoded_signature_df):
     #     "Internal user": [1,0],
     #     "unknown ip": [0, 1]
     # }
+    # ═══ IP-TO-ROLE MAPPING — must match data_process/node_attribute_tools.py ═══
+    # Update both files when adapting to a new network topology.
     ipLabel_dict = {
         "Firewall":        [1, 0, 0, 0, 0, 0, 0, 0],
         "DNS+DC Server":   [0, 1, 0, 0, 0, 0, 0, 0],

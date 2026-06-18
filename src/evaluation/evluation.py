@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import torch
 from torch_geometric.loader import DataLoader
 import pandas as pd
@@ -132,7 +134,7 @@ def one_base_cluster(one_base_graph_data,IncrementalDBSCAN,base_graphId:dict,bas
     #                                                                                #
     ##################################################################################
     #pd.set_option('mode.chained_assignment', None)
-    assert len(cluster_labels) == len(one_base_graph_data), "cluster_labels 长度与 DataFrame 行数不一致"
+    assert len(cluster_labels) == len(one_base_graph_data), "cluster_labels length does not match DataFrame rows"
     one_base_graph_data.loc[:, 'HDBSCAN_LABEL'] = cluster_labels
     cluster_distri = one_base_graph_data.groupby(['HDBSCAN_LABEL', 'group_label_easy']) \
         .agg({'id': 'count', 'warn_num': 'sum'}) \
@@ -201,7 +203,7 @@ def get_sample_num(unique_values_count:pd.DataFrame,clsuter_ok_distri,cluster_si
         overall_supsicous_prob = supsicous_prob_mean * (1-cluster_single_risk_percent) + 1*cluster_single_risk_percent
         if overall_supsicous_prob>=0.96:
             return n_samples
-    return {'error':'采样数量过大'}
+    return {'error':'sample count too large'}
 
 def evaluation(train_embedding_path, test_embedding_path, eps=0.10, min_pts=3):
     """Evaluation function
@@ -280,7 +282,7 @@ def evaluation(train_embedding_path, test_embedding_path, eps=0.10, min_pts=3):
     alert_single_risk_num = one_single_risk_data['warn_num'].sum()
     alert_single_risk_percent = alert_single_risk_num / unique_values_count['warn_num'].sum()
     print('---------------------------------Workload reduction RESULTS----------------------------------------------------')
-    print("唯一风险等级集群占比: {:.2%}, 对应簇占比: {:.2%}, 告警占比{:.2%}".format(cluster_single_risk_percent,subgraph_single_risk_percent,alert_single_risk_percent))
+    print("Single-risk cluster proportion: {:.2%}, Corresponding subgraph proportion: {:.2%}, Alert proportion{:.2%}".format(cluster_single_risk_percent,subgraph_single_risk_percent,alert_single_risk_percent))
     wandb.log(
         {
             "eps": eps,
@@ -475,7 +477,7 @@ def evaluation(train_embedding_path, test_embedding_path, eps=0.10, min_pts=3):
     total_warn_num = succeed_match['warn_num'].sum()
     total_weighted_low_estimation = weighted_low_estimation.sum()
     total_low_estimation_rate = total_weighted_low_estimation / total_warn_num
-    print("整体低估率:{:.4%}".format(total_low_estimation_rate))
+    print("Overall under-estimation rate::{:.4%}".format(total_low_estimation_rate))
     wandb_metrics["total_low_estimation_rate"] = total_low_estimation_rate
     wandb_metrics['eps'] = eps
     wandb.log(wandb_metrics)
@@ -500,12 +502,12 @@ def get_embedding(input_data:list, best_model_path:str, output_path:str):
     model = NNConv_model(node_in_feature, edge_in_feature, graph_in_feature,node_out_feature=node_out_feature,graph_out_feature=graph_out_feature).to(DEVICE)
 
     if best_model_path !='':
-        print('载入训练模型')
+        print('Loading trained model')
         model.load_state_dict(torch.load(best_model_path, map_location=DEVICE))
     else:
         model.apply(lambda m: m.reset_parameters() if hasattr(m, 'reset_parameters') else None)
 
-        print('随机初始化')
+        print('Random initialization')
 
     model.eval()
 
@@ -541,7 +543,7 @@ if __name__ == "__main__":
         fine_tune_num = int(ratio * 100)
         # Model path selection
         if model_select_ver == 'only_tune':
-            model_path = str(CHECKPOINT_DIR / f"fine-tune-model2/{fine_tune_num}/gps_model_only_tune.pt")
+            model_path = str(CHECKPOINT_DIR / f"fine-tune-model3/{fine_tune_num}/gps_model_only_tune.pt")
         elif model_select_ver == 'only_pre':
             model_path = str(CHECKPOINT_DIR / "pre-train-model/gps_global_model.pt")
         elif model_select_ver == 'pre_and_tune':

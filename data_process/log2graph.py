@@ -97,6 +97,7 @@ class Log2graph():
         # Partition complete, writing data
         print('Writing data.........')
         out_graph_data.reset_index(drop=True, inplace=True)
+        os.makedirs(os.path.dirname(self.out_path), exist_ok=True)
         out_graph_data.to_csv(self.out_path, header=True, index=False)
 
     def getGraph_withLog(self, input_data_df:pd.DataFrame):
@@ -543,5 +544,5 @@ if __name__=="__main__":
     data = log2graph.format_data2csv() 
     end_time = time.time()
     elapsed_time = (end_time - start_time) / 60
-    print(f"社区划分（含读入读出数据），方法在CIC-IDS2017，{csv_name}上的运行时间: {elapsed_time} 分钟")
+    print(f"Graph partition + I/O time on {csv_name}: {elapsed_time:.2f} min: {elapsed_time} 分钟")
 

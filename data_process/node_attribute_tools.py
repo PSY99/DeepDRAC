@@ -1,15 +1,23 @@
 import igraph as ig
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# IP-TO-ROLE MAPPING — DATASET SPECIFIC, MUST BE ADAPTED FOR YOUR NETWORK
+# ═══════════════════════════════════════════════════════════════════════════════
+# This mapping assigns each IP address to a network role (Firewall, Web Server,
+# etc.) and produces an 8-dim one-hot node feature vector. Unknown IPs map to
+# the last position ("Outsider").
+#
+# The IPs below are from the CIC-IDS2017 testbed topology. For YOUR network,
+# replace them with your actual IP-to-role assignments.
+#
+# The same mapping is used in src/evaluation/get_base_pattern.py.
+# ═══════════════════════════════════════════════════════════════════════════════
+
 def ip2Label(ip:str)->list:
-# [Translated from Chinese]
-
-
-    获取ip的资产属性标签
-    Args:
-        ip: 规范的ip
-    Return:
-        label: ip属性标签的one-hot向量(8位)
+    """Map an IP address to an 8-dim one-hot role vector.
+    Unknown IPs default to index 7 (Outsider).
     """
+    ip = ip.strip(b'\x00'.decode())
     ip = ip.strip(b'\x00'.decode())
     label_map = {
         "Firewall": {

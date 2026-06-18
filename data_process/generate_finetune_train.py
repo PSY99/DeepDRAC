@@ -18,7 +18,12 @@ import math
 import pandas as pd
 from config import GRAPH_DATA_DIR
 
-
+# ── Label mapping ───────────────────────────────────────────────────────────
+# Maps each attack type string (from graph CSV 'group_label' field) to an
+# integer class ID. These 14 classes are from the paper's CIC-IDS2017 data.
+# For YOUR dataset: update this dict with your own attack type strings.
+# The class weights in train_tune.py must be updated to match (same order).
+# Run data_process/compute_class_weights.py to get correct weights.
 LABEL_MAP = {
     "{'BENIGN'}": 0,
     "{'Bot'}": 1,
