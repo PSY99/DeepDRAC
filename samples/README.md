@@ -1,8 +1,13 @@
 # Data Format Samples
 
-## Alert CSV Format (`data/alert_logs/correct_data/`)
+## Alert CSV Format
 
-These are Snort IDS alert logs with ground-truth labels. Each row represents a single alert.
+Place your alert CSV files under `data/alert_logs/correct_data/`.
+The directory name `correct_data/` is historical — in the original research,
+label corrections were applied to raw IDS alerts. If your data already has
+accurate labels, simply place the CSV files there directly.
+
+Each row represents a single IDS alert with a ground-truth label.
 
 Columns and example values:
 
@@ -20,8 +25,8 @@ id,real_time,sip_str,dip_str,sport,dport,protocol,category_standard,category_sta
 | sport | int | Source port |
 | dport | int | Destination port |
 | protocol | string | Protocol (TCP/UDP/ICMP) |
-| category_standard | string | Snort alert category |
-| category_standard_id | int | Category ID (Snort GID:SID format) |
+| category_standard | string | IDS alert category name |
+| category_standard_id | int | Alert category/signature ID |
 | signature_priority | int | Alert priority/severity |
 | Label | string | Ground-truth label (BENIGN or attack type) |
 
